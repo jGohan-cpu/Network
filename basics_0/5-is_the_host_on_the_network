@@ -7,4 +7,10 @@ fi
 
 ip_address="$1"
 
-ping -c 5 "$ip_address" | awk '/PING|bytes from/ {print} /rtt/ {print "   ---", $0}'
+ping_result=$(ping -c 5 "$ip_address")
+
+if [[ $? -eq 0 ]]; then
+  echo "$ping_result" | awk '/PING|bytes from/ {print} /rtt/ {print "   ---", $0}'
+else
+  echo "Ping failed for $ip_address"
+fi
