@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-#Bash script that pings an IP address passed as an argument.
+#!/bin/bash
+
 if [ $# -eq 0 ]; then
   echo "Usage: $0 {IP_ADDRESS}"
   exit 1
@@ -7,4 +7,4 @@ fi
 
 ip_address="$1"
 
-ping -c 5 "$ip_address"
+ping -c 5 "$ip_address" | awk '/PING|bytes from/ {print} /rtt/ {print "   ---", $0}'
